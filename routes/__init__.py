@@ -1,6 +1,6 @@
 import falcon
 
-from health import HealthCheckResource
+from .health import HealthCheckResource
 
 def add_routes(api: falcon.API):
     """ Registers endpoints with Falcon
