@@ -8,7 +8,7 @@ class UserBrowsers:
         - __browsers__: Current active browsers. Keys are user IDs.
     """
     def __init__(self):
-        self.__browsers__: Dict[str]Browser = {}
+        self.__browsers__: Dict[str, Browser] = {}
 
     def get_browser(self, user_id: str) -> Browser:
         """ Get a browser for a specific user
