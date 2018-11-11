@@ -1,5 +1,7 @@
 from typing import Dict
 
+import jwt
+
 class AuthToken:
     """ JSON web token used to identify users with API
     Fields:
@@ -12,17 +14,22 @@ class AuthToken:
         """
         self.sub: str = sub
 
-    def to_dict(self) -> Dict[str]str:
-        """ Returns a representation of the class in dict form
-        Return: dict representation of class
-        """
-        return {
-            'sub': self.sub
-        }
-
-    def encode(self, encode_secret: str) -> str:
+    def encode(self, jwt_secret: str) -> str:
         """ Encode an auth token to a string
         Args:
-            - encode_secret: Secret used to sign JWT hash
+            - jwt_secret: Secret used to sign JWT hash
         """
-        pass
+        return jwt.encode(vars(self), jwt_secret, algorithm='HS256')
+
+    def decode(self, encoded_jwt: str, jwt_secret: str):
+        """ Decode an auth token from a string and save in class fields.
+        Args:
+            - encoded_jwt: Encoded auth token to decode
+            - jwt_secret: Secret used to sign JWT hash
+
+        Raises:
+            - KeyError: If the encoded JWT is missing a required field
+        """
+        token = jwt.decode(encoded_jwt, jwt_secret, algorithms=['HS256'])
+
+        self.sub = token['sub']
