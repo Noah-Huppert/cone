@@ -3,6 +3,9 @@
 import falcon
 
 import routes
+from config import Config
 
 api = falcon.API(media_type=falcon.MEDIA_JSON)
-routes.add_routes(api)
+
+cfg = Config()
+routes.add_routes(api, cfg)
